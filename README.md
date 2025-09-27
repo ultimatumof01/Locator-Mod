@@ -24,6 +24,8 @@ z = z1 + t1 * dz1
 (x1, x2, z1, z2 represent the coordinates of the positions)
 (dx1, dx2, dz1, dx2 represent direction vectors for the positions) 
 
+The outputted coordinates are typically within 5 blocks of the target, this is due to imprecisions with java floats and de-sync between server and client when moving.
+
 # Notice
 
 This only works if target is stationary, I'll maybe fix this in a later version.
