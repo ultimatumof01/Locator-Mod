@@ -5,6 +5,7 @@ This mod uses waypoint packets to triangulate the precise coordinates of any pla
 # Technical
 
 Waypoint packet types:
+
 Azimuth - stores angle from North to target (long range)
 
 ChunkBased - stores chunk of target (medium range?)
