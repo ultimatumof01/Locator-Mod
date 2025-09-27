@@ -3,12 +3,11 @@
 	"package": "net.ultimatumof.mixin.client",
 	"compatibilityLevel": "JAVA_21",
 	"client": [
-		"ClientConnectionMixin",
+		"ClientConnectionMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
 	},
 	"mixins": [
-
 	]
 }

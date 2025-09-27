@@ -20,7 +20,6 @@ public class TriangulationInfo {
         this.theta2 = angle;
     }
 
-    //chatgpt
     public double[] findIntersection() {
         // Convert angles to radians
         double rad1 = Math.toRadians(theta1);
@@ -45,7 +44,7 @@ public class TriangulationInfo {
         double dz = z2 - z1;
 
         double t1 = (dx * (-dz2) - dz * (-dx2)) / det;
-        double t2 = (dx * dz1 - dz * dx1) / (dx2 * dz1 - dz2 * dx1);
+        //double t2 = (dx * dz1 - dz * dx1) / (dx2 * dz1 - dz2 * dx1);
 
         double ix = x1 + t1 * dx1;
         double iz = z1 + t1 * dz1;
