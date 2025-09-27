@@ -1,0 +1,47 @@
+package net.ultimatumof;
+
+import com.mojang.brigadier.arguments.StringArgumentType;
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
+import net.ultimatumof.util.LocatorWaypointHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static net.minecraft.server.command.CommandManager.argument;
+import static net.minecraft.server.command.CommandManager.literal;
+
+public class LocatorModClient implements ClientModInitializer {
+	public static final String MOD_ID = "locator-mod";
+	public static final LocatorWaypointHandler HANDLER = new LocatorWaypointHandler();
+
+	// This logger is used to write text to the console and the log file.
+	// It is considered best practice to use your mod id as the logger's name.
+	// That way, it's clear which mod wrote info, warnings, and errors.
+	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	@Override
+	public void onInitializeClient() {
+		LOGGER.info("Init Locator Mod Client.");
+		ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal("find")
+				.then(ClientCommandManager.argument("player", StringArgumentType.word())
+				.executes(context -> {
+					String player = StringArgumentType.getString(context, "player");
+					if (MinecraftClient.getInstance().getNetworkHandler().getWaypointHandler().hasWaypoint()) {
+						context.getSource().sendFeedback(Text.literal("Waypoints are not enabled.").formatted(Formatting.RED));
+						return -1;
+					}
+					if (MinecraftClient.getInstance().getNetworkHandler().getPlayerListEntry(player) == null) {
+						context.getSource().sendFeedback(Text.literal("Couldn't find player " + player + ". Are you sure you typed it correctly? (it is case-sensitive!)").formatted(Formatting.RED));
+						return -1;
+					}
+					context.getSource().sendFeedback(Text.literal("Starting tracking ").append(Text.literal(player).formatted(Formatting.GOLD)).append("."));
+					LocatorModClient.HANDLER.changeTracking(player);
+					return 1;
+				}))));
+	}
+}

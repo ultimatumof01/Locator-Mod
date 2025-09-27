@@ -1,0 +1,14 @@
+{
+	"required": true,
+	"package": "net.ultimatumof.mixin.client",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"ClientConnectionMixin",
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"mixins": [
+
+	]
+}

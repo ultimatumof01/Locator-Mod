@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "locator-mod",
+	"version": "${version}",
+	"name": "Locator Mod",
+	"description": "Uses packets that update the minecraft locator bar, alongside triangulation to pinpoint the exact location of players.",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/locator-mod/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.ultimatumof.LocatorMod"
+		],
+		"client": [
+			"net.ultimatumof.LocatorModClient"
+		]
+	},
+	"mixins": [
+		"locator-mod.mixins.json",
+		{
+			"config": "locator-mod.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.17.2",
+		"minecraft": "~1.21.8",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
