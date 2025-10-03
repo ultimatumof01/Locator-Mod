@@ -7,13 +7,15 @@ import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallba
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.ultimatumof.util.LocatorWaypointHandler;
+import net.ultimatumof.locator.LocatorDebugger;
+import net.ultimatumof.locator.LocatorWaypointHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class LocatorModClient implements ClientModInitializer {
 	public static final String MOD_ID = "locator-mod";
 	public static final LocatorWaypointHandler HANDLER = new LocatorWaypointHandler();
+	public static final LocatorDebugger DEBUGGER = new LocatorDebugger();
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	@Override
 	public void onInitializeClient() {
@@ -40,5 +42,13 @@ public class LocatorModClient implements ClientModInitializer {
 
 					return 1;
 				}))));
+
+		ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal("locatorDebug")
+				.executes(context -> {
+					DEBUGGER.enabled = !DEBUGGER.enabled;
+					context.getSource().sendFeedback(Text.literal("debugging=" + DEBUGGER.enabled));
+
+					return 1;
+				})));
 	}
 }
